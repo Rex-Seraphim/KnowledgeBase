@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbnu.knowledgebase.mapper.ArticleMapper">
+
+    <resultMap id="BaseResultMap" type="com.hbnu.knowledgebase.entity.Article">
+            <id property="articleId" column="article_id" />
+            <result property="articleNum" column="article_num"/>
+            <result property="version" column="version" />
+            <result property="kbId" column="kb_id" />
+            <result property="chapter" column="chapter" />
+            <result property="title" column="title" />
+            <result property="content" column="content" />
+            <result property="authorId" column="author_id" />
+            <result property="createdAt" column="created_at" />
+            <result property="viewCount" column="view_count" />
+            <result property="likeCount" column="like_count" />
+            <result property="isCurrent" column="is_current" />
+    </resultMap>
+
+    <!-- 字段集合复用 -->
+    <sql id="Base_Column_List">
+        article_id,version,kb_id,chapter,title,content,
+        author_id,created_at,view_count,like_count,is_current
+    </sql>
+
+    <!-- 自定义查询示例：根据文章ID和版本号查询 -->
+    <select id="selectByIdAndVersion" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM article
+        WHERE article_id = #{articleId} AND version = #{version}
+    </select>
+
+    <!-- 增加浏览数 -->
+    <update id="incrementView" parameterType="long">
+        UPDATE article
+        SET view_count = view_count + 1
+        WHERE article_id = #{articleId}
+    </update>
+
+    <!-- 增加点赞数 -->
+    <update id="incrementLike" parameterType="long">
+        UPDATE article
+        SET like_count = like_count + 1
+        WHERE article_id = #{articleId}
+    </update>
+
+    <!-- 获取某 article_num 的最大版本号 -->
+    <select id="selectCurrentVersion" resultType="int">
+        SELECT MAX(version) FROM article WHERE article_num = #{articleNum}
+    </select>
+
+    <!-- 设置旧版本为非展示状态 -->
+    <update id="deactivateOldVersions" parameterType="map">
+        UPDATE article
+        SET is_current = 0
+        WHERE article_num = #{articleNum} AND article_id != #{newId}
+    </update>
+
+    <!-- 批量关闭某 article_num 的所有版本 -->
+    <update id="deactivateAllVersions" parameterType="int">
+        UPDATE article
+        SET is_current = 0
+        WHERE article_num = #{articleNum}
+    </update>
+
+    <!-- 激活某个版本 -->
+    <update id="activateVersion" parameterType="long">
+        UPDATE article
+        SET is_current = 1
+        WHERE article_id = #{articleId}
+    </update>
+
+
+</mapper>

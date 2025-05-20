@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbnu.knowledgebase.mapper.KnowledgeBaseMapper">
+
+    <resultMap id="BaseResultMap" type="com.hbnu.knowledgebase.entity.KnowledgeBase">
+            <id property="kbId" column="kb_id" />
+            <result property="kbName" column="kb_name" />
+            <result property="creatorId" column="creator_id" />
+            <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        kb_id,kb_name,creator_id,created_at
+    </sql>
+</mapper>
