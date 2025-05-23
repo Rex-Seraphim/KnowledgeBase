@@ -57,25 +57,25 @@ public class ArticleController {
         return ResponseEntity.ok(article);
     }
 
-    /**
-     * 发布新版本文章
-     */
-    @PostMapping("/publish")
-    public ResponseEntity<?> publishNewVersion(@RequestBody Article article) {
-        articleService.publishNewVersion(article);
-        return ResponseEntity.ok(Result.success("新版本已发布"));
-    }
+//    /**
+//     * 发布新版本文章
+//     */
+//    @PostMapping("/publish")
+//    public ResponseEntity<?> publishNewVersion(@RequestBody Article article) {
+//        articleService.publishNewVersion(article);
+//        return ResponseEntity.ok(Result.success("新版本已发布"));
+//    }
 
-    /**
-     * 获取某篇文章的历史版本列表
-     */
-    @GetMapping("/{articleNum}/versions")
-    public ResponseEntity<List<Article>> getArticleVersions(@PathVariable int articleNum) {
-        List<Article> versions = articleService.list(new QueryWrapper<Article>()
-                .eq("article_num", articleNum)
-                .orderByDesc("version"));
-        return ResponseEntity.ok(versions);
-    }
+//    /**
+//     * 获取某篇文章的历史版本列表
+//     */
+//    @GetMapping("/{articleNum}/versions")
+//    public ResponseEntity<List<Article>> getArticleVersions(@PathVariable int articleNum) {
+//        List<Article> versions = articleService.list(new QueryWrapper<Article>()
+//                .eq("article_num", articleNum)
+//                .orderByDesc("version"));
+//        return ResponseEntity.ok(versions);
+//    }
 
     /**
      * 设置某个版本为当前版本
@@ -88,17 +88,51 @@ public class ArticleController {
         return ResponseEntity.ok(Result.success("当前版本已更新"));
     }
 
+//    /**
+//     * 获取所有当前展示的文章（is_current = 1）
+//     */
+//    @GetMapping("/current")
+//    public ResponseEntity<?> getCurrentArticles() {
+//        try {
+//            List<Article> currentArticles = articleService.list(new QueryWrapper<Article>().eq("is_current", 1));
+//            return ResponseEntity.ok(Result.success(currentArticles));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(500).body(Result.error(500, "服务器内部错误：" + e.getMessage()));
+//        }
+//    }
+
+
+
+
+
+
     /**
-     * 获取所有当前展示的文章（is_current = 1）
+     * 发布新版本文章
+     */
+    @PostMapping("/publish")
+    public ResponseEntity<?> publishNewVersion(@RequestBody Article article) {
+        articleService.publishNewVersion(article);
+        return ResponseEntity.ok(Result.success("新版本已发布"));
+    }
+
+    /**
+     * 获取所有当前展示的文章（is_current == 1）
      */
     @GetMapping("/current")
     public ResponseEntity<?> getCurrentArticles() {
-        try {
-            List<Article> currentArticles = articleService.list(new QueryWrapper<Article>().eq("is_current", 1));
-            return ResponseEntity.ok(Result.success(currentArticles));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(Result.error(500, "服务器内部错误：" + e.getMessage()));
-        }
+        List<Article> currentArticles = articleService.list(new QueryWrapper<Article>().eq("is_current", 1));
+        return ResponseEntity.ok(Result.success(currentArticles));
+    }
+
+    /**
+     * 获取某篇文章的历史版本列表（可选）
+     */
+    @GetMapping("/{articleNum}/versions")
+    public ResponseEntity<?> getArticleVersions(@PathVariable int articleNum) {
+        List<Article> versions = articleService.list(new QueryWrapper<Article>()
+                .eq("article_num", articleNum)
+                .orderByDesc("version"));
+        return ResponseEntity.ok(versions);
     }
 }

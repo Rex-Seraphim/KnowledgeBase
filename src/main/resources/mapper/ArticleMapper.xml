@@ -73,5 +73,26 @@
         WHERE article_id = #{articleId}
     </update>
 
+    <select id="selectMaxArticleNum" resultType="int">
+        SELECT MAX(article_num) FROM article;
+    </select>
+
+    <select id="selectMaxVersionByNum" resultType="int">
+        SELECT MAX(version) FROM article WHERE article_num = #{articleNum};
+    </select>
+
+    <update id="updateIsCurrentToZero">
+        UPDATE article SET is_current = 0 WHERE article_num = #{articleNum}
+    </update>
+
+    <insert id="insert">
+        INSERT INTO article (
+            article_num, version, kb_id, chapter,
+            title, content, author_id, created_at, is_current
+        ) VALUES (
+                     #{articleNum}, #{version}, #{kbId}, #{chapter},
+                     #{title}, #{content}, #{authorId}, #{createdAt}, #{isCurrent}
+                 )
+    </insert>
 
 </mapper>

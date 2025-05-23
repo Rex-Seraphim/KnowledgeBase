@@ -32,7 +32,17 @@ public class KnowledgeBase {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private String createdAt;
+
+    public KnowledgeBase() {
+    }
+
+    public KnowledgeBase(Integer kbId, String kbName, Integer creatorId, String createdAt) {
+        this.kbId = kbId;
+        this.kbName = kbName;
+        this.creatorId = creatorId;
+        this.createdAt = createdAt;
+    }
 
     @Override
     public boolean equals(Object that) {

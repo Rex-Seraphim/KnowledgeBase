@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -38,5 +40,34 @@ public class KnowledgeBaseController {
         return ResponseEntity.ok(Result.success(articles));
     }
 
+    // 创建知识库
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody KnowledgeBase knowledgeBase) {
+        // 自动填充创建时间
+        if (knowledgeBase.getCreatedAt() == null || knowledgeBase.getCreatedAt().isEmpty()) {
+            knowledgeBase.setCreatedAt(currentTimeString());
+        }
+        knowledgeBaseService.save(knowledgeBase);
+        return ResponseEntity.ok(Result.success("知识库创建成功"));
+    }
 
+    // 发布新版本文章（Article）
+    @PostMapping("/publish")
+    public ResponseEntity<?> publishNewVersion(@RequestBody Article article) {
+        // 自动填充字段
+        if (article.getAuthorId() == null) {
+            return ResponseEntity.badRequest().body(Result.error(400, "作者ID不能为空"));
+        }
+        if (article.getCreatedAt() == null || article.getCreatedAt().isEmpty()) {
+            article.setCreatedAt(currentTimeString());
+        }
+
+        articleService.publishNewVersion(article);
+        return ResponseEntity.ok(Result.success("新版本已发布"));
+    }
+
+    // 辅助方法：生成当前时间字符串（ISO 格式）
+    private String currentTimeString() {
+        return LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
+    }
 }

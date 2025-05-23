@@ -57,7 +57,7 @@ public class Article {
     /**
      * 创建时间
      */
-    private Date createdAt;
+    private String createdAt;
 
     /**
      * 浏览量
@@ -73,6 +73,24 @@ public class Article {
      * 是否当前展示版本（0否，1是）
      */
     private Integer isCurrent;
+
+    public Article() {
+    }
+
+    public Article(Long articleId, Integer articleNum, Integer version, Integer kbId, String chapter, String title, String content, Integer authorId, String createdAt, Integer viewCount, Integer likeCount, Integer isCurrent) {
+        this.articleId = articleId;
+        this.articleNum = articleNum;
+        this.version = version;
+        this.kbId = kbId;
+        this.chapter = chapter;
+        this.title = title;
+        this.content = content;
+        this.authorId = authorId;
+        this.createdAt = createdAt;
+        this.viewCount = viewCount;
+        this.likeCount = likeCount;
+        this.isCurrent = isCurrent;
+    }
 
     @Override
     public boolean equals(Object that) {

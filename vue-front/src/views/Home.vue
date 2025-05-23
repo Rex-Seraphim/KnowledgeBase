@@ -4,6 +4,10 @@
     <nav class="top-nav">
       <span>欢迎回来，{{ username }}</span>
       <div class="nav-links">
+        <!-- 新增按钮 -->
+        <a @click="goToCreateKb">新建知识库</a>
+        <a @click="goToCreateArticle">新建文章</a>
+        <!-- 原有按钮 -->
         <a @click="logout">退出登录</a>
         <router-link v-if="isAdmin" to="/admin">管理员面板</router-link>
         <span v-else style="color: gray; font-size: 14px;">非管理员用户</span>
@@ -117,6 +121,14 @@ function pad(n) {
 
 function goToKb(kb) {
   router.push(`/kb/${kb.kbId}`)
+}
+
+function goToCreateKb() {
+  router.push('/create-kb')
+}
+
+function goToCreateArticle() {
+  router.push('/create-article')
 }
 
 // 过滤器

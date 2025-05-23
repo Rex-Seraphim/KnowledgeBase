@@ -16,9 +16,22 @@ public class GlobalExceptionHandler {
                 .body(Result.error(400, "请求参数不合法"));
     }
 
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Result<?>> handleAllExceptions() {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(Result.error(500, "服务器内部错误"));
+//    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Result<?>> handleAllExceptions() {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Result.error(500, "服务器内部错误"));
+    public Result<?> handleException(Exception e) {
+        e.printStackTrace(); // 打印异常堆栈，用于调试
+        return Result.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误：" + e.getMessage());
     }
 }
+
+
+
+
+
+
+

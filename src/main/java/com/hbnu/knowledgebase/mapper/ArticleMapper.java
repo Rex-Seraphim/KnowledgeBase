@@ -39,6 +39,17 @@ public interface ArticleMapper extends BaseMapper<Article> {
     int activateVersion(Long articleId);
 
 
+    // 获取最大的 article_num
+    Integer selectMaxArticleNum();
+
+    // 获取指定 article_num 的最大版本号
+    Integer selectMaxVersionByNum(@Param("articleNum") int articleNum);
+
+    // 更新某个 article_num 下所有记录的 is_current 为 0
+    void updateIsCurrentToZero(@Param("articleNum") int articleNum);
+
+
+
 }
 
 

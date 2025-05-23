@@ -51,8 +51,18 @@ public class User {
      */
     private String email;
 
+    public User() {
+    }
 
-
+    public User(Integer userId, String username, String password, Date createdAt, Integer status, Date lastLogin, String email) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.status = status;
+        this.lastLogin = lastLogin;
+        this.email = email;
+    }
 
     @Override
     public boolean equals(Object object) {

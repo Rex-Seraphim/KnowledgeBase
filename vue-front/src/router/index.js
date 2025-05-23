@@ -16,11 +16,9 @@ const routes = [
   { path: '/', name: 'Home', component: Home, meta: { requiresAuth: true } },
   { path: '/admin', name: 'Admin', component: Admin, meta: { requiresAuth: true, requiresAdmin: true } },
   { path: '/kb/:kbId', name: 'KnowledgeBaseDetail', component: KnowledgeBaseDetail, meta: { requiresAuth: true } },
-  {
-    path: '/article/edit/:articleId',
-    name: 'EditArticle',
-    component: EditArticle
-  }
+  { path: '/article/edit/:articleId', name: 'EditArticle', component: EditArticle },
+  { path: '/create-kb', name: 'CreateKnowledgeBase', component: () => import('../views/CreateKnowledgeBase.vue') },
+  { path: '/create-article', name: 'CreateArticle', component: () => import('../views/CreateArticle.vue')}
 ]
 
 const router = createRouter({
